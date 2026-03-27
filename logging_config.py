@@ -1,6 +1,8 @@
 import logging
 import watchtower
 import boto3
+import socket
+import datetime
 
 # Configure root logger
 logger = logging.getLogger()
@@ -13,9 +15,9 @@ if not logger.handlers:
     console_handler.setLevel(logging.INFO)
 
     cloudwatch_handler = watchtower.CloudWatchLogHandler(
-        boto3_session=boto3.Session(),
-        log_group="deepracer-logs",
-        stream_name="training-stream"
+        boto3_session = boto3.Session(),
+        log_group = "deepracer-logs",
+        stream_name = f"{socket.gethostname()}-{datetime.datetime.now().strftime('%Y-%m-%d')}"
     )
     cloudwatch_handler.setLevel(logging.INFO)
 
